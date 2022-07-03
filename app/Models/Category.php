@@ -2,22 +2,22 @@
 
 namespace App\Models;
 
-use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Product extends Model
+class Category extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','description','enable'];
+    protected $fillable = ['name','enable'];
 
     /**
-     * The category that belong to the Product
+     * The product that belong to the Category
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function category()
+    public function product()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Product::class);
     }
 }
