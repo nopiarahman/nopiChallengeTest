@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Models\Image;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreImageRequest;
@@ -34,26 +35,26 @@ class ImageController extends Controller
     public function store(StoreImageRequest $request)
     {
         /** Mengambil semua request product, validasi dilakukan di StoreProductRequest. 
-         * termasuk category_id(required), cek validasi
+         * termasuk product_id(required), cek validasi
         */
-        // try {
-        //     DB::beginTransaction();
-        //     $cekKategori = Product::find($request->product_id);
-        //     if($cekKategori!= null){
-        //         $image = Image::Create($request->all());
-        //         /** Attach id product ke pivot table category_product */
-        //         $image->product()->attach($request->product_id);
-        //         DB::commit();
-        //         return new ImageResource($image);
-        //     }else{
-        //         /** return gagal jika category tidak ada */
-        //         return response('Gagal. Product Id tidak ditemukan',400);
-        //     }
+        try {
+            DB::beginTransaction();
+            $cekKategori = Product::find($request->product_id);
+            if($cekKategori!= null){
+                $image = Image::Create($request->all());
+                /** Attach id product ke pivot table image_product */
+                $image->product()->attach($request->product_id);
+                DB::commit();
+                return new ImageResource($image);
+            }else{
+                /** return gagal jika category tidak ada */
+                return response('Gagal. Product Id tidak ditemukan',400);
+            }
             
-        // } catch (\Exception $ex) {
-        //     DB::rollback();
-        //     return response('Gagal. Pesan Error: '.$ex->getMessage(),400);
-        // }
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return response('Gagal. Pesan Error: '.$ex->getMessage(),400);
+        }
     }
 
     /**

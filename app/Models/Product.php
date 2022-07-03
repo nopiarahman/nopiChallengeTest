@@ -20,4 +20,13 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+    /**
+     * The image that belong to the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function image()
+    {
+        return $this->belongsToMany(Images::class);
+    }
 }
