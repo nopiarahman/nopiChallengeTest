@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\V1\ImageController;
 use App\Http\Controllers\V1\ProductController;
 use App\Http\Controllers\V1\CategoryController;
 
@@ -22,4 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function(){ 
     Route::apiResource('product',ProductController::class);
     Route::apiResource('category',CategoryController::class);
+    Route::apiResource('image',ImageController::class);
 });
