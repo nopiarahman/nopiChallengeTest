@@ -13,7 +13,8 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        /** TODO=cek authentikasi */
+        return true;
     }
 
     /**
@@ -24,7 +25,8 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=>'required',
+            'enable'=>'required|boolean'
         ];
     }
 }

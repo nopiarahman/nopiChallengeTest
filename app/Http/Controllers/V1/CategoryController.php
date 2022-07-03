@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Resources\V1\CategoryResource;
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -14,9 +15,15 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    /**TODO = Error handling */
     public function index()
     {
-        //
+        /** Mengambil semua data category dan dikembalikan ke CategoryResource
+         * cek di App\Http\Resources\V1\CategoryResource;
+         */
+        $category = Category::all();
+        return CategoryResource::collection($category);
     }
 
     /**
@@ -27,7 +34,9 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        /** Mengambil semua request category, validasi dilakukan di StoreCategoryRequest. */
+        $category = Category::Create($request->all());
+        return new CategoryResource($category);
     }
 
     /**
@@ -38,7 +47,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return new CategoryResource($category);
     }
 
     /**
@@ -50,7 +59,8 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $category->update($request->all());
+        return new CategoryResource($category) ;
     }
 
     /**
@@ -61,6 +71,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        /** delete product, respond string kosong dan response code 204
+         * TODO = Response message
+         */
+        $category->delete();
+        return response('',204);
     }
 }

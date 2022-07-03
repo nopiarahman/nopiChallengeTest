@@ -27,7 +27,8 @@ class StoreProductRequest extends FormRequest
         return [
             'name'=>'required',
             'description'=>'required',
-            'enable'=>'required'
+            'enable'=>'required|boolean',
+            'category_id'=>'required'
         ];
     }
 }

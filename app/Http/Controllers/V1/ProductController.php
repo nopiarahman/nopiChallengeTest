@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\V1;
 
 use App\Models\Product;
+use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\V1\ProductResource;
@@ -35,9 +37,27 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        /** Mengambil semua request product, validasi dilakukan di StoreProductRequest. */
-        $product = Product::Create($request->all());
-        return new ProductResource($product);
+        /** Mengambil semua request product, validasi dilakukan di StoreProductRequest. 
+         * termasuk category_id(required), cek validasi
+        */
+        try {
+            DB::beginTransaction();
+            $cekKategori = Category::find($request->category_id);
+            if($cekKategori!= null){
+                $product = Product::Create($request->all());
+                /** Attach id product ke pivot table category_product */
+                $product->category()->attach($request->category_id);
+                DB::commit();
+                return new ProductResource($product);
+            }else{
+                /** return gagal jika category tidak ada */
+                return response('Gagal. Category Id tidak ditemukan',400);
+            }
+            
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return response('Gagal. Pesan Error: '.$ex->getMessage(),400);
+        }
     }
 
     /**
