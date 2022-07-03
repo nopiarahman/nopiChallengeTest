@@ -49,9 +49,9 @@ class Handler extends ExceptionHandler
         // });
         /** Costum error message jika berasal dari API, */
         $this->renderable(function(NotFoundHttpException $e, $request){
-            if($request->wantJson()){
+            if($request->wantsJson()){
                 return response()->json(['message'=>'Not Found'],404);
             }
-        })
+        });
     }
 }
