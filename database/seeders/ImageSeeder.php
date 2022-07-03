@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Image;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ImageSeeder extends Seeder
 {
@@ -14,6 +16,11 @@ class ImageSeeder extends Seeder
      */
     public function run()
     {
-        $categori = Image::factory(3)->create();
+        $image = Image::factory(5)->create();
+
+        foreach (Image::all() as $image) {
+            $product =Product::all()->shuffle()->first();
+            $image->product()->attach($product->id);
+        }
     }
 }
