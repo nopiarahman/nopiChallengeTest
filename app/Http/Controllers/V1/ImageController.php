@@ -91,6 +91,6 @@ class ImageController extends Controller
     {
         $image->product()->detach();
         $image->delete();
-        return response('Product dihapus');
+        return response('Image dihapus');
     }
 }

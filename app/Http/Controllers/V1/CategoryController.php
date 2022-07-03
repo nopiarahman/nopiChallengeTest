@@ -74,6 +74,7 @@ class CategoryController extends Controller
         /** delete product, respond string kosong dan response code 204
          * TODO = Response message
          */
+        $category->product()->detach();    
         $category->delete();
         return response('',204);
     }
