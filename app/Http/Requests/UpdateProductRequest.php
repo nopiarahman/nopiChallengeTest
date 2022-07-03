@@ -13,7 +13,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,11 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules()
     {
+        /**Validasi Product */
         return [
-            //
+            'name'=>'required',
+            'description'=>'required',
+            'enable'=>'required'
         ];
     }
 }

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Resources\V1\ProductResource;
 use App\Http\Requests\UpdateProductRequest;
-use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -14,9 +15,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    /**TODO = Error handling */
+
     public function index()
     {
-        //
+        /** Mengambil semua data product dan dikembalikan ke ProductResource
+         * cek di App\Http\Resources\V1\ProductResource;
+         */
+        $product = Product::all();
+        return ProductResource::collection($product);
     }
 
     /**
@@ -27,7 +35,9 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        /** Mengambil semua request product, validasi dilakukan di StoreProductRequest. */
+        $product = Product::Create($request->all());
+        return new ProductResource($product);
     }
 
     /**
@@ -38,7 +48,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return new ProductResource($product);
     }
 
     /**
@@ -50,7 +60,8 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $product->update($request->all());
+        return new ProductResource($product) ;
     }
 
     /**
@@ -61,6 +72,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        /** delete product, respond string kosong dan response code 204
+         * TODO = Response message
+         */
+        $product->delete();
+        return response('',204);
     }
 }
