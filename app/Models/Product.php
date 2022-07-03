@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Category;
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -27,6 +28,6 @@ class Product extends Model
      */
     public function image()
     {
-        return $this->belongsToMany(Images::class);
+        return $this->belongsToMany(Image::class);
     }
 }
