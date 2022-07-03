@@ -41,7 +41,17 @@ class ImageController extends Controller
             DB::beginTransaction();
             $cekKategori = Product::find($request->product_id);
             if($cekKategori!= null){
-                $image = Image::Create($request->all());
+                if ($file = $request->file('file')) {
+                    $path = $file->store('public/files');
+                }else{
+                    $path = $request->file;
+                }
+                $image = Image::Create([
+                    'name'=>$request->name,
+                    'enable'=>$request->enable,
+                    'product_id'=>$request->product_id,
+                    'file'=>$path
+                ]);
                 /** Attach id product ke pivot table image_product */
                 $image->product()->attach($request->product_id);
                 DB::commit();

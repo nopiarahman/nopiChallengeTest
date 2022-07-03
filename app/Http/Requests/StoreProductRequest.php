@@ -28,7 +28,7 @@ class StoreProductRequest extends FormRequest
             'name'=>'required',
             'description'=>'required',
             'enable'=>'required|boolean',
-            'category_id'=>'required'
+            'category_id'=>'exists:\App\Models\Category,id'
         ];
     }
 }

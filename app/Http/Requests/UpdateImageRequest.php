@@ -27,7 +27,7 @@ class UpdateImageRequest extends FormRequest
             'name'=>'required',
             'file'=>'required',
             'enable'=>'required|boolean',
-            'product_id'=>'required'
+            'product_id'=>'exists:\App\Models\Product,id'
         ];
     }
 }
