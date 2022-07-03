@@ -76,6 +76,6 @@ class CategoryController extends Controller
          */
         $category->product()->detach();    
         $category->delete();
-        return response('',204);
+        return response('Category dihapus',204);
     }
 }
