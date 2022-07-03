@@ -92,10 +92,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        /** delete product, respond string kosong dan response code 204
-         * TODO = Response message
-         */
+        $product->category()->detach();
         $product->delete();
-        return response('',204);
+        return response('Product dihapus');
     }
 }
